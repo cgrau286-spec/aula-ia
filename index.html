@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#172554"><meta name="description" content="AULA IA: organiza temarios, practica y planifica tu estudio.">
+<link rel="manifest" href="manifest.json"><link rel="stylesheet" href="styles.css">
+<title>AULA IA — Tu espacio de estudio</title>
+</head>
+<body>
+<div class="app-shell">
+  <aside class="sidebar" id="sidebar">
+    <div class="brand"><div class="brand-mark">A</div><div><strong>AULA IA</strong><small>Tu espacio de estudio</small></div></div>
+    <nav>
+      <button class="nav-item active" data-view="dashboard">◫ <span>Inicio</span></button>
+      <button class="nav-item" data-view="subjects">▤ <span>Asignaturas</span></button>
+      <button class="nav-item" data-view="library">▧ <span>Temarios</span></button>
+      <button class="nav-item" data-view="practice">✎ <span>Practicar</span></button>
+      <button class="nav-item" data-view="planner">▦ <span>Plan de estudio</span></button>
+    </nav>
+    <div class="sidebar-bottom"><div class="privacy-note">🔒 <span>Los datos de esta versión se guardan en este navegador.</span></div><button id="themeToggle" class="secondary full">◐ Cambiar tema</button></div>
+  </aside>
+  <main class="main">
+    <header class="topbar"><button id="menuToggle" class="icon-btn" aria-label="Abrir menú">☰</button><div><p class="eyebrow" id="todayLabel">TU ESPACIO DE ESTUDIO</p><h1 id="pageTitle">Buenos días 👋</h1></div><button class="primary" id="quickAdd">＋ Nueva asignatura</button></header>
+    <section id="view-dashboard" class="view active">
+      <div class="welcome-card"><div><span class="pill">APRENDE MEJOR, NO SOLO MÁS</span><h2>Tu próximo paso empieza aquí.</h2><p>Organiza tus apuntes, comprueba lo que recuerdas y convierte tus errores en repasos útiles.</p><button class="light-btn" data-goto="subjects">Crear mi primera asignatura <span>→</span></button></div><div class="welcome-art"><div class="book">A<span>+</span></div><div class="spark s1">✦</div><div class="spark s2">✧</div></div></div>
+      <div class="stats-grid">
+        <article class="stat-card"><span>Asignaturas</span><strong id="statSubjects">0</strong><small>En tu biblioteca</small></article>
+        <article class="stat-card"><span>Sesiones completadas</span><strong id="statSessions">0</strong><small>Tests realizados</small></article>
+        <article class="stat-card"><span>Aciertos medios</span><strong id="statAccuracy">—</strong><small>Según tus tests</small></article>
+        <article class="stat-card"><span>Repasos pendientes</span><strong id="statReviews">0</strong><small>Conceptos por revisar</small></article>
+      </div>
+      <div class="content-grid"><section class="panel"><div class="section-head"><div><p class="eyebrow">CONTINÚA</p><h3>Tus asignaturas</h3></div><button class="text-btn" data-goto="subjects">Ver todas →</button></div><div id="dashboardSubjects" class="subject-list empty-state">Aún no tienes asignaturas. Crea una para empezar.</div></section>
+      <section class="panel"><div class="section-head"><div><p class="eyebrow">PARA HOY</p><h3>Tu siguiente acción</h3></div><span class="round-icon">✦</span></div><div id="todayTasks" class="task-list"><div class="empty-state">Añade una asignatura y la fecha del examen para preparar tu plan.</div></div><button class="secondary full" data-goto="planner">Organizar mi estudio</button></section></div>
+      <section class="panel"><div class="section-head"><div><p class="eyebrow">RECIENTE</p><h3>Últimos resultados</h3></div></div><div id="recentResults" class="empty-state">Cuando completes un test, tus resultados aparecerán aquí.</div></section>
+    </section>
+    <section id="view-subjects" class="view"><div class="section-head page-section-head"><div><p class="eyebrow">TU BIBLIOTECA</p><h2>Asignaturas</h2><p class="muted">Agrupa documentos, temas y resultados por materia.</p></div><button class="primary" id="addSubject">＋ Crear asignatura</button></div><div id="subjectsGrid" class="cards-grid"></div></section>
+    <section id="view-library" class="view"><div class="section-head page-section-head"><div><p class="eyebrow">MATERIALES</p><h2>Temarios y documentos</h2><p class="muted">Sube un PDF con texto seleccionable o importa apuntes de texto.</p></div></div><div class="panel upload-panel"><div class="upload-symbol">↑</div><h3>Incorpora un temario</h3><p>PDF o TXT. El procesamiento PDF utiliza PDF.js desde un CDN y requiere conexión a internet.</p><form id="uploadForm"><label>Asignatura<select id="uploadSubject" required></select></label><label class="file-drop"> <span>Seleccionar archivo PDF o TXT</span><input id="fileInput" type="file" accept=".pdf,.txt,text/plain,application/pdf" required></label><button class="primary" type="submit">Importar temario</button></form><p class="small muted" id="uploadStatus">Los documentos se procesan en tu navegador en esta versión.</p></div><div id="documentsList" class="document-list"></div></section>
+    <section id="view-practice" class="view"><div class="section-head page-section-head"><div><p class="eyebrow">RECUPERACIÓN ACTIVA</p><h2>Practicar</h2><p class="muted">Haz un test basado en los conceptos extraídos de tus materiales.</p></div></div><div class="practice-layout"><section class="panel"><h3>Configura tu sesión</h3><form id="quizForm" class="stack"><label>Asignatura<select id="quizSubject" required></select></label><label>Tema o documento<select id="quizDocument"><option value="all">Todos los documentos</option></select></label><label>Número de preguntas<select id="quizCount"><option>5</option><option selected>10</option><option>15</option><option>20</option></select></label><label>Dificultad<select id="quizDifficulty"><option value="mixed">Variada</option><option value="easy">Básica</option></select></label><button class="primary" type="submit">Preparar test →</button></form><p class="small muted">Las preguntas de esta primera versión se crean mediante reglas sobre el texto importado. La corrección es automática y literal, no una evaluación semántica con IA.</p></section><section class="panel quiz-panel" id="quizArea"><div class="empty-illustration">✎</div><h3>Tu práctica aparecerá aquí</h3><p class="muted">Importa primero un documento con contenido para generar preguntas.</p></section></div></section>
+    <section id="view-planner" class="view"><div class="section-head page-section-head"><div><p class="eyebrow">PLANIFICACIÓN ADAPTATIVA</p><h2>Plan de estudio</h2><p class="muted">Crea un plan realista a partir de tu examen y tu tiempo disponible.</p></div></div><div class="planner-layout"><section class="panel"><h3>Configura tu plan</h3><form id="planForm" class="stack"><label>Asignatura<select id="planSubject" required></select></label><label>Fecha del examen<input id="examDate" type="date" required></label><label>Tiempo disponible al día<select id="dailyMinutes"><option value="30">30 minutos</option><option value="45">45 minutos</option><option value="60" selected>1 hora</option><option value="90">1 hora y media</option><option value="120">2 horas</option></select></label><label>Tu nivel actual<select id="currentLevel"><option value="beginner">Estoy empezando</option><option value="medium">Conozco parte del temario</option><option value="advanced">Solo necesito consolidar</option></select></label><button class="primary" type="submit">Crear / actualizar plan</button></form></section><section class="panel"><div class="section-head"><h3>Tu calendario</h3><span class="round-icon">▦</span></div><div id="planOutput" class="empty-state">Configura tu examen para ver las tareas recomendadas.</div></section></div></section>
+    <footer>AULA IA · MVP local · Tus datos permanecen en este navegador <button id="exportData" class="text-btn">Exportar mis datos</button><button id="clearData" class="text-btn danger-text">Borrar datos</button></footer>
+  </main>
+</div>
+<div class="modal-backdrop" id="subjectModal" hidden><div class="modal"><button class="modal-close" id="closeModal" aria-label="Cerrar">×</button><p class="eyebrow">NUEVA MATERIA</p><h2>Crear asignatura</h2><form id="subjectForm" class="stack"><label>Nombre de la asignatura<input id="subjectName" placeholder="Ej. Emergencias y Protección Civil" required maxlength="80"></label><label>Color<select id="subjectColor"><option value="blue">Azul</option><option value="violet">Violeta</option><option value="green">Verde</option><option value="orange">Naranja</option></select></label><button class="primary" type="submit">Crear asignatura</button></form></div></div>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script><script src="app.js"></script>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js')
+        .then(() => console.log('AULA IA: Service Worker registrado'))
+        .catch(error => console.error('Error registrando Service Worker:', error));
+    });
+  }
+</script></body></html>

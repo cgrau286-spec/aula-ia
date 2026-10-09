@@ -1,0 +1,10 @@
+{
+  "name": "AULA IA — Tu espacio de estudio",
+  "short_name": "AULA IA",
+  "description": "Organiza temarios, practica y planifica tu estudio.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f5f7fb",
+  "theme_color": "#172554",
+  "icons": []
+}
